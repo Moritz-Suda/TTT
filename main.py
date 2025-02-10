@@ -28,11 +28,12 @@ def play_game():
         print_board.print_board(board)
         choice = str(input(turningPlayer + ": enter a field to place your marker: "))
         if capture(turningPlayer, choice):
+            if checkwin.check_win(board):
+                running = False
             if check_full.check_full(boardCapFields):
                 running = False
                 print_board.print_board(board)
                 print("Draw")
-            checkwin.check_win(board)
             switchPlayer()
 
 
