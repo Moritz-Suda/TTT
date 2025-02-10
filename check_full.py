@@ -4,7 +4,6 @@ def check_full(board):
         if board[i]:
             capCount = capCount + 1
     if capCount == 9:
-        print("Draw")
         return True
     return False
 #    if a1_captured is True:

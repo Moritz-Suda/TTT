@@ -27,11 +27,12 @@ def play_game():
     while running:
         print_board.print_board(board)
         choice = str(input(turningPlayer + ": enter a field to place your marker: "))
-        capture(turningPlayer, choice)
-        if check_full.check_full(boardCapFields):
-            running = False
-
-        switchPlayer()
+        if capture(turningPlayer, choice):
+            if check_full.check_full(boardCapFields):
+                running = False
+                print_board.print_board(board)
+                print("Draw")
+            switchPlayer()
 
 
 def switchPlayer():
@@ -43,12 +44,16 @@ def switchPlayer():
 
 
 def capture(turningPlayer, field):
-    if turningPlayer == player_1:
-        board[int(field) - 1] = "X"
-        boardCapFields[int(field) - 1] = True
-    elif turningPlayer == player_2:
-        board[int(field) - 1] = "O"
-        boardCapFields[int(field) - 1] = True
+    if boardCapFields[int(field) - 1] == False:
+        if turningPlayer == player_1:
+            board[int(field) - 1] = "X"
+            boardCapFields[int(field) - 1] = True
+            return True
+        elif turningPlayer == player_2:
+            board[int(field) - 1] = "O"
+            boardCapFields[int(field) - 1] = True
+            return True
+    return False
 
 
 # main function
