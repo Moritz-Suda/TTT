@@ -32,6 +32,7 @@ def play_game():
                 running = False
                 print_board.print_board(board)
                 print("Draw")
+            checkwin.check_win(board)
             switchPlayer()
 
 
