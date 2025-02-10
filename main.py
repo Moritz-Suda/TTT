@@ -57,6 +57,8 @@ def capture(turningPlayer, field):
 
 
 # main function
-if __name__ == '__main__':
-    play_game()
-
+try:
+    if __name__ == '__main__':
+        play_game()
+except KeyboardInterrupt:
+    print("\nexit")
