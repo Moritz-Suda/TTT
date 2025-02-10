@@ -2,6 +2,7 @@
 import print_board
 import checkwin
 import check_full
+import random
 
 # vars
 running = False
@@ -10,26 +11,80 @@ boardCapFields = [False, False, False, False, False, False, False, False, False]
 player_1 = "P_1"
 player_2 = "P_2"
 turningPlayer = player_1
-a1_captured = False
-a2_captured = False
-a3_captured = False
-b1_captured = False
-b2_captured = False
-b3_captured = False
-c1_captured = False
-c2_captured = False
-c3_captured = False
 
 
 # funcs
-def play_game():
+def start():
+    print("Welcome!")
+    choice = int(input("enter the mode you want to play (1: single- | 2: multi-player): "))
+    if choice == 1:
+        play_single()
+    elif choice == 2:
+        play_multi()
+
+
+def play_single():
+    running = True
+    global player_2
+    player_2 = "ai"
+    
+    while running:
+        player = True
+        while player:
+            print_board.print_board(board)
+            choice = str(input("Player 1: enter a field to place your marker: "))
+            if capture(player_1, choice):
+                win, player = checkwin.check_win(board)
+                if win:
+                    if player == player_1:
+                        running = False
+                        print_board.print_board(board)
+                        print("Player 1 hat gewonnen!")
+                        break
+                if check_full.check_full(boardCapFields):
+                    running = False
+                    print_board.print_board(board)
+                    print("Draw")
+                    break
+                player = False
+        if running is False:
+            break
+        ai = True
+        while ai:
+            print_board.print_board(board)
+            choice = str(random.randrange(1, 9))
+            if capture(player_2, choice):
+                win, player = checkwin.check_win(board)
+                if win:
+                    if player == player_2:
+                        running = False
+                        print_board.print_board(board)
+                        print("AI hat gewonnen!")
+                if check_full.check_full(boardCapFields):
+                    running = False
+                    print_board.print_board(board)
+                    print("Draw")
+                ai = False
+                if running is not True:
+                    break
+
+
+def play_multi():
     running = True
     while running:
         print_board.print_board(board)
         choice = str(input(turningPlayer + ": enter a field to place your marker: "))
         if capture(turningPlayer, choice):
-            if checkwin.check_win(board):
-                running = False
+            win, player = checkwin.check_win(board)
+            if win:
+                if player == player_1:
+                    running = False
+                    print_board.print_board(board)
+                    print("Player 1 hat gewonnen!")
+                elif player == player_2:
+                    running = False
+                    print_board.print_board(board)
+                    print("Player 2 hat gewonnen!")
             if check_full.check_full(boardCapFields):
                 running = False
                 print_board.print_board(board)
@@ -46,7 +101,7 @@ def switchPlayer():
 
 
 def capture(turningPlayer, field):
-    if boardCapFields[int(field) - 1] == False:
+    if boardCapFields[int(field) - 1] is False:
         if turningPlayer == player_1:
             board[int(field) - 1] = "X"
             boardCapFields[int(field) - 1] = True
@@ -61,6 +116,6 @@ def capture(turningPlayer, field):
 # main function
 try:
     if __name__ == '__main__':
-        play_game()
+        start()
 except KeyboardInterrupt:
     print("\nexit")
