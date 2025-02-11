@@ -6,13 +6,3 @@ def check_full(board):
     if capCount == 9:
         return True
     return False
-#    if a1_captured is True:
-#        if a2_captured is True:
-#            if a3_captured is True:
-#                if b1_captured is True:
-#                    if b2_captured is True:
-#                        if b3_captured is True:
-#                            if c1_captured is True:
-#                                if c2_captured is True:
-#                                    if c3_captured is True:
-#                                        print("You've fucked up!")
