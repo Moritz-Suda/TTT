@@ -25,9 +25,7 @@ def start():
 
 def play_single():
     running = True
-    global player_2
-    player_2 = "ai"
-    
+    global playe2
     while running:
         player = True
         while player:
